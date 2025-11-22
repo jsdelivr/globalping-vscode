@@ -1,0 +1,301 @@
+{
+  "name": "globalping",
+  "displayName": "Globalping",
+  "description": "Run network diagnostics (Ping, HTTP, DNS, Traceroute, MTR) from thousands of global locations directly in VS Code",
+  "version": "1.0.0",
+  "publisher": "globalping",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Testing",
+    "Other"
+  ],
+  "keywords": [
+    "globalping",
+    "network",
+    "ping",
+    "http",
+    "dns",
+    "traceroute",
+    "mtr",
+    "diagnostics",
+    "network-testing",
+    "api-testing",
+    "monitoring",
+    "latency",
+    "uptime",
+    "devops",
+    "sre",
+    "connectivity",
+    "troubleshooting",
+    "performance",
+    "cdn",
+    "availability",
+	"atlas",
+	"routing"
+  ],
+  "icon": "resources/globalping-icon.png",
+  "author": "Globalping",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jsdelivr/globalping-vscode"
+  },
+  "homepage": "https://globalping.io/",
+  "bugs": {
+    "url": "https://github.com/jsdelivr/globalping-vscode/issues"
+  },
+  "galleryBanner": {
+    "color": "#1a2338",
+    "theme": "dark"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "globalping",
+          "title": "Globalping",
+          "icon": "resources/globalping-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "globalping": [
+        {
+          "id": "globalping.testRunner",
+          "name": "Test Runner",
+          "type": "webview"
+        },
+        {
+          "id": "globalping.history",
+          "name": "History"
+        },
+        {
+          "id": "globalping.savedTests",
+          "name": "Saved Tests"
+        },
+        {
+          "id": "globalping.authentication",
+          "name": "Authentication",
+          "type": "webview"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "globalping.runNewTest",
+        "title": "Globalping: Run New Test",
+        "icon": "$(play)"
+      },
+      {
+        "command": "globalping.runLastTest",
+        "title": "Globalping: Run Last Test"
+      },
+      {
+        "command": "globalping.contextTest.ping",
+        "title": "Ping"
+      },
+      {
+        "command": "globalping.contextTest.http",
+        "title": "HTTP GET"
+      },
+      {
+        "command": "globalping.contextTest.dns",
+        "title": "DNS Resolve"
+      },
+      {
+        "command": "globalping.contextTest.traceroute",
+        "title": "Traceroute"
+      },
+      {
+        "command": "globalping.contextTest.mtr",
+        "title": "MTR"
+      },
+      {
+        "command": "globalping.viewHistory",
+        "title": "Globalping: View Test History"
+      },
+      {
+        "command": "globalping.clearHistory",
+        "title": "Clear History",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "globalping.openSettings",
+        "title": "Globalping: Open Settings"
+      },
+      {
+        "command": "globalping.setApiToken",
+        "title": "Globalping: Set API Token"
+      },
+      {
+        "command": "globalping.removeApiToken",
+        "title": "Globalping: Remove API Token"
+      },
+      {
+        "command": "globalping.openHistoryResult",
+        "title": "Open Results"
+      },
+      {
+        "command": "globalping.rerunHistoryTest",
+        "title": "Re-run Test",
+        "icon": "$(run)"
+      },
+      {
+        "command": "globalping.loadSavedTest",
+        "title": "Load Test"
+      },
+      {
+        "command": "globalping.deleteSavedTest",
+        "title": "Delete"
+      },
+      {
+        "command": "globalping.openLastResult",
+        "title": "Open Last Result"
+      },
+      {
+        "command": "globalping.saveTest",
+        "title": "Save Test",
+        "icon": "$(star-add)"
+      },
+      {
+        "command": "globalping.showOutputChannel",
+        "title": "Globalping: Show Results Output"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "submenu": "globalping.contextMenu",
+          "when": "editorHasSelection",
+          "group": "navigation@100"
+        }
+      ],
+      "globalping.contextMenu": [
+        {
+          "command": "globalping.contextTest.ping",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "globalping.contextTest.http",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "globalping.contextTest.dns",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "globalping.contextTest.traceroute",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "globalping.contextTest.mtr",
+          "when": "editorHasSelection"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "globalping.clearHistory",
+          "when": "view == globalping.history",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "globalping.rerunHistoryTest",
+          "when": "view == globalping.history && viewItem == historyItem",
+          "group": "inline"
+        },
+        {
+          "command": "globalping.deleteSavedTest",
+          "when": "view == globalping.savedTests && viewItem == savedTest",
+          "group": "inline"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "globalping.contextMenu",
+        "label": "Globalping Run:"
+      }
+    ],
+    "configuration": {
+      "title": "Globalping",
+      "properties": {
+        "globalping.defaultLocation": {
+          "type": "string",
+          "default": "world",
+          "description": "Default location for tests using Globalping's magic field (e.g., 'world', 'US', 'California', 'aws-eu-west-1')"
+        },
+        "globalping.defaultLimit": {
+          "type": "number",
+          "default": 3,
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Default number of probes per test"
+        },
+        "globalping.inProgressUpdates": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable streaming partial results during test execution"
+        },
+        "globalping.rawResults": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show CLI-style raw output instead of formatted tables"
+        },
+        "globalping.defaultHttpProtocol": {
+          "type": "string",
+          "enum": [
+            "HTTPS",
+            "HTTP"
+          ],
+          "default": "HTTPS",
+          "description": "Default protocol for HTTP tests when target is a bare hostname or IP (e.g., 'google.com' defaults to HTTPS)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "compile": "npm run check-types && node esbuild.js",
+    "build": "npm run check-types && node esbuild.js --production",
+    "check-types": "tsc --noEmit",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "pretest": "npm run compile:test && npm run lint",
+    "compile:test": "tsc -p tsconfig.test.json",
+    "lint": "eslint src",
+    "test": "bash .vscode-test.sh",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "globalping": "^0.2.0",
+    "ipaddr.js": "^2.2.0",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^24.10.1",
+    "@types/uuid": "^10.0.0",
+    "@types/vscode": "^1.74.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.4",
+    "@typescript-eslint/parser": "^8.46.4",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.7.0",
+    "esbuild": "^0.27.0",
+    "eslint": "^9.39.1",
+    "glob": "^10.3.10",
+    "mocha": "^11.7.5",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.9.3"
+  },
+  "type": "commonjs"
+}
