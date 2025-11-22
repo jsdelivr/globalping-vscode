@@ -14,7 +14,7 @@
 
 ### - [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=globalping.globalping)
 
-### - Open VSX (coming soon)
+### - [Open VSX](https://open-vsx.org/extension/globalping/globalping)
 
 ## What is Globalping?
 
