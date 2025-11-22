@@ -272,7 +272,7 @@
     "pretest": "npm run compile:test && npm run lint",
     "compile:test": "tsc -p tsconfig.test.json",
     "lint": "eslint src",
-    "test": "bash .vscode-test.sh",
+    "test": "bash vscode-test.sh",
     "package": "vsce package"
   },
   "dependencies": {
