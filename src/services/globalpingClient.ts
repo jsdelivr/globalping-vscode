@@ -30,6 +30,7 @@ import {
 import { RateLimitHandler } from './rateLimitHandler';
 import { TelemetryService } from './telemetry';
 import { ConfigService } from './config';
+import packageJson from '../../package.json';
 
 export interface PollOptions {
 	interval?: number;  // Polling interval in ms (default: 2000)
@@ -56,7 +57,7 @@ export class GlobalpingClient {
 	constructor(
 		private telemetry: TelemetryService,
 		private config: ConfigService,
-		version: string = require('../../package.json').version
+		version: string = packageJson.version
 	) {
 		this.userAgent = `globalping-vscode/${version}`;
 		this.rateLimitHandler = new RateLimitHandler(telemetry);

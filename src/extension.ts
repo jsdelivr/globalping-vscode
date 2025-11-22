@@ -23,9 +23,10 @@ import { SettingsViewProvider } from './views/settingsViewProvider';
 import { TargetParser } from './parsers/targetParser';
 import { COMMANDS, MESSAGES, VIEWS } from './constants';
 import * as ui from './utils/ui';
+import packageJson from '../package.json';
 
 // Read extension version from package.json
-const EXTENSION_VERSION = require('../package.json').version;
+const EXTENSION_VERSION = packageJson.version;
 
 /**
  * Extension activation function
