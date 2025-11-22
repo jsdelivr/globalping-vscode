@@ -10,6 +10,12 @@
 
 ---
 
+## Install now
+
+### - [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=globalping.globalping)
+
+### - Open VSX (coming soon)
+
 ## What is Globalping?
 
 Globalping for VS Code brings the power of global network testing directly into your development workflow. Test your APIs, websites, and services from **over 3000 locations worldwide** without leaving your editor.

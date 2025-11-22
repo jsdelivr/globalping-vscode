@@ -24,8 +24,8 @@ import { TargetParser } from './parsers/targetParser';
 import { COMMANDS, MESSAGES, VIEWS } from './constants';
 import * as ui from './utils/ui';
 
-// Extension version
-const EXTENSION_VERSION = '1.0.0';
+// Read extension version from package.json
+const EXTENSION_VERSION = require('../package.json').version;
 
 /**
  * Extension activation function

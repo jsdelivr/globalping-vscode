@@ -56,7 +56,7 @@ export class GlobalpingClient {
 	constructor(
 		private telemetry: TelemetryService,
 		private config: ConfigService,
-		version: string = '1.0.0'
+		version: string = require('../../package.json').version
 	) {
 		this.userAgent = `globalping-vscode/${version}`;
 		this.rateLimitHandler = new RateLimitHandler(telemetry);
