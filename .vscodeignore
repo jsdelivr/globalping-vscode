@@ -1,0 +1,31 @@
+# Development files
+.vscode/**
+.vscode-test/**
+src/**
+test/**
+out/**
+.gitignore
+tsconfig.json
+tsconfig.test.json
+eslint.config.mjs
+vscode-test.sh
+
+# Build configuration
+esbuild.js
+webpack.config.js
+
+# Documentation not needed at runtime
+CLAUDE.md
+.claude/**
+.cursor/**
+
+# Source maps and TypeScript files
+**/*.map
+**/*.ts
+
+# All node_modules (bundled into dist/extension.js)
+node_modules/**
+
+# Package output only - include bundled files
+!dist/**/*.js
+

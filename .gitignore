@@ -1,0 +1,15 @@
+# Build outputs
+out/
+node_modules/
+.vscode-test/
+dist/
+*.vsix
+*.log
+.DS_Store
+CLAUDE.md
+.*
+!.gitignore
+!.gitattributes
+!.github/
+!.vscodeignore
+!.vscode/
