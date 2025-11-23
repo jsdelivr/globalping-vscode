@@ -187,7 +187,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 		vscode.commands.registerCommand(COMMANDS.RERUN_HISTORY_TEST, async (item: any) => {
 			// Handle both direct entry and tree item
 			const entry = item.entry || item;
-			await testRunner.executeAndShowResults(entry.config);
+			await testRunner.executeAndShowResults(entry.config, undefined, entry.rawResults);
 			historyProvider.refresh();
 		}),
 

@@ -33,6 +33,7 @@ export interface TestHistoryEntry {
 	config: TestConfig;
 	result: Measurement;
 	status: 'success' | 'partial' | 'failed';
+	rawResults?: boolean;
 }
 
 /**

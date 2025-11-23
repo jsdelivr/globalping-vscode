@@ -69,7 +69,9 @@ export class TestRunner {
 
 		config: TestConfig,
 
-		_cancellationToken?: vscode.CancellationToken
+		_cancellationToken?: vscode.CancellationToken,
+
+		rawResults?: boolean
 
 	): Promise<Measurement> {
 
@@ -225,7 +227,9 @@ export class TestRunner {
 
 						result: measurement,
 
-						status
+						status,
+
+						rawResults
 
 					});
 
@@ -379,7 +383,7 @@ export class TestRunner {
 
 		try {
 
-			const measurement = await this.execute(config, cancellationToken);
+			const measurement = await this.execute(config, cancellationToken, rawResults);
 
 
 
