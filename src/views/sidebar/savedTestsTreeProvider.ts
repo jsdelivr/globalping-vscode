@@ -54,7 +54,7 @@ export class SavedTestsTreeProvider implements vscode.TreeDataProvider<SavedTest
 			'globalping.loadSavedTest',
 			async (item: SavedTestTreeItem) => {
 				// Load test into form instead of running immediately (Postman-style)
-				this.testRunnerProvider.loadTestIntoForm(item.test.config);
+				this.testRunnerProvider.loadTestIntoForm(item.test.config, item.test.rawResults);
 				vscode.window.showInformationMessage(`Loaded "${item.test.name}" into Test Runner`);
 			}
 		);

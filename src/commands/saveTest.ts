@@ -20,7 +20,7 @@ export class SaveTestCommand {
 	/**
 	 * Save a test configuration as a favorite
 	 */
-	public async saveTest(config: TestConfig): Promise<void> {
+	public async saveTest(config: TestConfig, rawResults?: boolean): Promise<void> {
 		// Prompt for a name
 		if ('type' in config) {
 			const name = await vscode.window.showInputBox({
@@ -45,7 +45,8 @@ export class SaveTestCommand {
 			try {
 				await this.storage.addSavedTest({
 					name: name.trim(),
-					config
+					config,
+					rawResults
 				});
 
 				// Refresh the saved tests view
@@ -70,7 +71,7 @@ export class SaveTestCommand {
 					// Try to get last test from history
 					const lastEntry = await this.storage.getLastHistoryEntry();
 					if (lastEntry) {
-						await this.saveTest(lastEntry.config);
+						await this.saveTest(lastEntry.config, lastEntry.rawResults);
 					} else {
 						vscode.window.showInformationMessage(MESSAGES.SUCCESS.NO_TEST_TO_SAVE);
 					}

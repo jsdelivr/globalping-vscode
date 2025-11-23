@@ -173,11 +173,12 @@ export class TestRunnerViewProvider implements vscode.WebviewViewProvider {
 	/**
 	 * Load a saved test configuration into the form (Postman-style behavior)
 	 */
-	public loadTestIntoForm(config: any): void {
+	public loadTestIntoForm(config: any, rawResults?: boolean): void {
 		if (this._view) {
 			this._view.webview.postMessage({
 				command: 'populateForm',
-				config: config
+				config: config,
+				rawResults: rawResults
 			});
 
 			// Reveal the Test Runner view so user sees the populated form
@@ -244,7 +245,8 @@ export class TestRunnerViewProvider implements vscode.WebviewViewProvider {
 
 			await this.storage.addSavedTest({
 				name: name.trim(),
-				config: config
+				config: config,
+				rawResults: testConfig.rawResults
 			});
 
 			// Refresh the saved tests view
@@ -769,7 +771,7 @@ export class TestRunnerViewProvider implements vscode.WebviewViewProvider {
 		/**
 		 * Populate form from saved test configuration (Postman-style)
 		 */
-		function populateFormFromConfig(config) {
+		function populateFormFromConfig(config, rawResults) {
 			// Basic fields
 			document.getElementById('testType').value = config.type;
 			document.getElementById('target').value = config.target;
@@ -781,6 +783,11 @@ export class TestRunnerViewProvider implements vscode.WebviewViewProvider {
 			}
 
 			document.getElementById('limit').value = config.limit || 3;
+
+			// Raw results setting
+			if (rawResults !== undefined) {
+				document.getElementById('rawResults').checked = rawResults;
+			}
 
 			// Measurement options
 			const opts = config.measurementOptions || {};
@@ -854,7 +861,7 @@ export class TestRunnerViewProvider implements vscode.WebviewViewProvider {
 					}
 					break;
 				case 'populateForm':
-					populateFormFromConfig(message.config);
+					populateFormFromConfig(message.config, message.rawResults);
 					break;
 				case 'testStatus':
 					updateStatus(message.status, message.message, message.result);

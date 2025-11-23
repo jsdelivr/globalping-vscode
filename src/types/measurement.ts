@@ -44,6 +44,7 @@ export interface SavedTest {
 	name: string;
 	config: TestConfig;
 	createdAt: string;
+	rawResults?: boolean;
 }
 
 /**
