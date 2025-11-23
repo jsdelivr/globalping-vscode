@@ -90,7 +90,9 @@ class HistoryTreeItem extends vscode.TreeItem {
 			tooltip.appendMarkdown(`**${entry.config.type.toUpperCase()} Test**\n\n`);
 			tooltip.appendMarkdown(`Target: \`${entry.config.target}\`\n\n`);
 			if (Array.isArray(entry.config.locations)) {
-				tooltip.appendMarkdown(`Location: ${entry.config.locations.join(', ')}\n\n`);
+				// Extract magic field from location objects
+				const locationStrings = entry.config.locations.map((loc: any) => loc.magic || 'Unknown');
+				tooltip.appendMarkdown(`Location: ${locationStrings.join(', ')}\n\n`);
 			} else if (entry.config.locations) {
 				tooltip.appendMarkdown(`Location: ${entry.config.locations}\n\n`);
 			}
