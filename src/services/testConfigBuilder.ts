@@ -24,8 +24,15 @@ export class TestConfigBuilder {
 	}
 
 	public withLocations(locations: string | string[]): TestConfigBuilder {
+		// Convert to array if string
 		const locationsArray = Array.isArray(locations) ? locations : [locations];
-		this.config.locations = locationsArray.map(loc => ({ magic: loc }));
+
+		// Split comma-separated locations and flatten
+		const expandedLocations = locationsArray.flatMap(loc =>
+			loc.split(',').map(l => l.trim()).filter(l => l.length > 0)
+		);
+
+		this.config.locations = expandedLocations.map(loc => ({ magic: loc }));
 		return this;
 	}
 

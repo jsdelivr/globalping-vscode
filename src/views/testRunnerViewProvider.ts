@@ -776,10 +776,13 @@ export class TestRunnerViewProvider implements vscode.WebviewViewProvider {
 			document.getElementById('testType').value = config.type;
 			document.getElementById('target').value = config.target;
 
-			// Location: extract magic field from locations array
+			// Location: extract magic fields from locations array and join with commas
 			if (Array.isArray(config.locations) && config.locations.length > 0) {
-				const location = config.locations[0].magic || 'World';
-				document.getElementById('location').value = location;
+				const locations = config.locations
+					.map(loc => loc.magic)
+					.filter(magic => magic)
+					.join(', ');
+				document.getElementById('location').value = locations || 'World';
 			}
 
 			document.getElementById('limit').value = config.limit || 3;
@@ -1133,6 +1136,7 @@ export class TestRunnerViewProvider implements vscode.WebviewViewProvider {
 		// Collect test-specific options
 		function collectTestOptions(testType) {
 			const ipVersion = parseInt(document.getElementById('ipVersion').value);
+			const target = document.getElementById('target').value.trim();
 
 			// Helper to check if a string is an IP address (IPv4 or IPv6)
 			function isIpAddress(str) {
@@ -1143,15 +1147,35 @@ export class TestRunnerViewProvider implements vscode.WebviewViewProvider {
 				return ipv4Pattern.test(str) || ipv6Pattern.test(str);
 			}
 
+			// Extract hostname/IP from target (remove protocol, path, etc.)
+			function extractHostname(targetStr) {
+				// Remove protocol if present
+				let hostname = targetStr.replace(/^https?:\\/\\//, '');
+				// Remove path/query/fragment
+				hostname = hostname.split('/')[0].split('?')[0].split('#')[0];
+				// Remove port
+				hostname = hostname.split(':')[0];
+				return hostname;
+			}
+
+			const hostname = extractHostname(target);
+			const targetIsIp = isIpAddress(hostname);
+
 			const options = {};
 
 			switch (testType) {
 				case 'ping':
-					options.ipVersion = ipVersion;
+					// Only include ipVersion if target is a domain (not an IP)
+					if (!targetIsIp) {
+						options.ipVersion = ipVersion;
+					}
 					options.protocol = document.getElementById('pingProtocol').value;
 					break;
 				case 'http':
-					options.ipVersion = ipVersion;
+					// Only include ipVersion if target is a domain (not an IP)
+					if (!targetIsIp) {
+						options.ipVersion = ipVersion;
+					}
 					options.method = document.getElementById('httpMethod').value;
 					options.protocol = document.getElementById('httpProtocol').value;
 					options.port = parseInt(document.getElementById('httpPort').value);
@@ -1168,17 +1192,25 @@ export class TestRunnerViewProvider implements vscode.WebviewViewProvider {
 							options.ipVersion = ipVersion;
 						}
 					} else {
-						// No resolver specified - ipVersion is allowed
-						options.ipVersion = ipVersion;
+						// No resolver specified - check target
+						if (!targetIsIp) {
+							options.ipVersion = ipVersion;
+						}
 					}
 					break;
 				}
 				case 'traceroute':
-					options.ipVersion = ipVersion;
+					// Only include ipVersion if target is a domain (not an IP)
+					if (!targetIsIp) {
+						options.ipVersion = ipVersion;
+					}
 					options.protocol = document.getElementById('tracerouteProtocol').value;
 					break;
 				case 'mtr':
-					options.ipVersion = ipVersion;
+					// Only include ipVersion if target is a domain (not an IP)
+					if (!targetIsIp) {
+						options.ipVersion = ipVersion;
+					}
 					options.protocol = document.getElementById('mtrProtocol').value;
 					break;
 			}
