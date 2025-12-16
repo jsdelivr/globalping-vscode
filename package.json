@@ -2,7 +2,7 @@
   "name": "globalping",
   "displayName": "Globalping",
   "description": "Run network diagnostics (Ping, HTTP, DNS, Traceroute, MTR) from thousands of global locations directly in VS Code",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "publisher": "globalping",
   "engines": {
     "vscode": "^1.74.0"
